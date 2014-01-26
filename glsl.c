@@ -1,8 +1,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Simple C clone of shadertoy
 //
+// How to compile :
+// gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo && ./glsl-demo
+//
 // How to use :
-// run ./glsl_demo
+// run ./glsl-demo
 // It will automatically scan for *.fs file in the same folder
 // Use n for next shader, b for previous shader
 // p to pause time
@@ -12,10 +15,7 @@
 // If the active shader .fs file is modified, it will recompile the shader.
 //
 // You can almost copy/paste shadertoy shaders to test (mostly the one wihtout
-// attachements, others needs some tweaking)
-//
-// How to compile :
-// gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo && ./glsl-demo
+// attachements, others need some tweaking)
 //
 // Author : Maxime Morel <maxime.morel69@gmail.com>
 ////////////////////////////////////////////////////////////////////////////////
