@@ -1,21 +1,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Simple C clone of shadertoy
 //
+// How to compile :
+// gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo
+//
 // How to use :
 // run ./glsl-demo
 // It will automatically scan for *.fs file in the same folder
 // Use n for next shader, b for previous shader
 // p to pause time
 // +- to increase, decrease timestep
+// i to reset timer
 // w to toggle fullscreen
 //
 // If the active shader .fs file is modified, it will recompile the shader.
 //
 // You can almost copy/paste shadertoy shaders to test (mostly the one wihtout
 // attachements, others needs some tweaking)
-//
-// How to compile :
-// gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo
 //
 // Author : Maxime Morel <maxime.morel69@gmail.com>
 ////////////////////////////////////////////////////////////////////////////////
@@ -257,7 +258,7 @@ GLuint createProgram(const char* filename)
     free(binary);
     fclose(f);
 
-    printf("Shader program binary dump : len:%d - len wrote:%d\n", binLength, len);
+    //printf("Shader program binary dump : len:%d - len wrote:%d\n", binLength, len);
 
     return prog;
 }
@@ -303,7 +304,7 @@ void initRender()
 
     glBindVertexArray(0);
 
-    printf("glerror init: %d\n", glGetError());
+    //printf("glerror init: %d\n", glGetError());
 }
 ////////////////////////////////////////////////////////////////////////////////
 int count = 0;
@@ -338,7 +339,7 @@ void renderScene()
     glutSwapBuffers();
 
     int endTime = glutGet(GLUT_ELAPSED_TIME);
-    printf("frame time : %d\n", endTime-beginTime);
+    //printf("frame time : %d\n", endTime-beginTime);
     //struct timeval timeEnd;
     //gettimeofday(&timeEnd, NULL);
     //printf("%d %d \n", timeEnd.tv_sec, timeEnd.tv_usec);
