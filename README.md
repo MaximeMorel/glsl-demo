@@ -5,7 +5,7 @@ Simple C clone of shadertoy, to make glsl demo.
 
 ### How to compile :
 ```
-gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo && ./glsl-demo
+gcc glsl.c -lGL -lglut -lGLEW -o glsl-demo
 ```
 
 ### How to use :
