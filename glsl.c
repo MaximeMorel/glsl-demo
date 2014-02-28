@@ -315,7 +315,11 @@ void renderScene()
         const struct timespec ts = {0, 15000000};
         nanosleep(&ts, NULL);
         //Sleep(15);
-        return;
+        //return;
+    }
+    else
+    {
+        gCtx.time += gCtx.timeStep;
     }
 
     int beginTime = glutGet(GLUT_ELAPSED_TIME);
@@ -345,8 +349,6 @@ void renderScene()
     //printf("%d %d \n", timeEnd.tv_sec, timeEnd.tv_usec);
     const struct timespec ts = {0, 16600000-(endTime-beginTime)*1000000};
     nanosleep(&ts, NULL);
-
-    gCtx.time += gCtx.timeStep;
 
     GLenum glerr = glGetError();
     if(glerr) printf("glerror render: %d\n", glerr);
@@ -459,8 +461,8 @@ int main(int argc, char** argv)
         basePath = argv[1];
     }
     gCtx.basePath = basePath;
-    gCtx.resx = 800;
-    gCtx.resy = 600;
+    gCtx.resx = 1280;
+    gCtx.resy = 720;
 
     gCtx.pause = 0;
     gCtx.time = 0.0f;

@@ -17,7 +17,7 @@ layout(location = 3) uniform vec3 iPos;
 //------------------------------------------------------------------------------
 float sdPlane( vec3 p )
 {
-    //return p.y+0.1*sin(10.0*sin(p.z)*cos(p.x));
+    return p.y+0.1*sin(iGlobalTime)*sin(10.0*sin(p.z)*cos(p.x));
 	return p.y;
 }
 //------------------------------------------------------------------------------
@@ -195,7 +195,9 @@ float softshadow( in vec3 ro, in vec3 rd, in float mint, in float maxt, in float
         t += 0.005;
 		}
         else
-            {break;}
+        {
+            break;
+        }
     }
     return clamp( res, 0.0, 1.0 );
 }
@@ -228,7 +230,7 @@ float calcAO( in vec3 pos, in vec3 nor )
 vec3 render( in vec3 ro, in vec3 rd )
 {
     vec3 col = vec3(0.0);
-    vec3 res = castRay(ro,rd,20.0);
+    vec3 res = castRay(ro,rd,30.0);
     float t = res.x;
 	float m = res.y;
     if( m>-0.5 )
@@ -242,13 +244,13 @@ vec3 render( in vec3 ro, in vec3 rd )
         float ao = calcAO( pos, nor );
 
         vec3 lig = normalize( vec3(-0.6, 0.7, -0.5) );
-		//vec3 lig = normalize( vec3(0.0, 0.1, 0.0) );
+		//vec3 lig = normalize( vec3(1.0, 0.1, 0.0) );
 		float amb = clamp( 0.5+0.5*nor.y, 0.0, 1.0 );
         float dif = clamp( dot( nor, lig ), 0.0, 1.0 );
         float bac = clamp( dot( nor, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-pos.y,0.0,1.0);
 
 		float sh = 1.0;
-		if( dif>0.02 ) { sh = softshadow( pos, lig, 0.02, 10.0, 7.0 ); dif *= sh; }
+		if( dif>0.02 ) { sh = softshadow( pos, lig, 0.5, 100.0, 7.0 ); dif *= sh; }
 
 		vec3 brdf = vec3(0.0);
 		brdf += 0.20*amb*vec3(0.10,0.11,0.13)*ao;
@@ -260,14 +262,20 @@ vec3 render( in vec3 ro, in vec3 rd )
 		float fre = ao*pow( clamp(1.0+dot(nor,rd),0.0,1.0), 2.0 );
 
 		col = col*brdf + vec3(1.0)*col*spe + 0.2*fre*(0.5+0.5*col);
-	}
 
-	col *= exp( -0.01*t*t );
+        col *= exp( -0.01*t*t );
+	}
+    else
+    {
+        //col = vec3(0.2, 0.5, 0.8);
+    }
+
+	//col *= exp( -0.01*t*t );
 
     //*
 	return vec3( clamp(col,0.0,1.0) );
     /*/
-    float val = res.z / 50.0;
+    float val = res.z / 64.0;
     return vec3(val*3.0 - 0.33, val < 0.33 ? val*3.0 : (-val+1.0)*3.0, 1.0 - val*3.0);
     //*/
 }
